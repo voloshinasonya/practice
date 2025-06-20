@@ -5,7 +5,6 @@ Import random
 App = FastAPI()
 Wikipedia.set_lang(«uk»)
 
-# Ключевые слова для тем
 Keywords_by_topic = {
     «дата»: [
         «січня», «лютого», «березня», «квітня», «травня», «червня»,
@@ -40,7 +39,7 @@ Def get_random_article(topic: str):
     If topic not in keywords_by_topic:
         Return {«error»: «Невідома тема»}
 
-    For _ in range(15):  # максимум 15 спроб знайти релевантну статтю
+    For _ in range(15):
         Try:
             Keyword = random.choice(keywords_by_topic[topic])
             Search_results = wikipedia.search(keyword)
@@ -52,7 +51,6 @@ Def get_random_article(topic: str):
             Summary = wikipedia.summary(title, sentences=3)
             Categories = [cat.lower() for cat in page.categories]
 
-            # Фільтрація за категоріями
             If topic == «персона»:
                 If not any(x in cat for cat in categories for x in [«персоналії», «народились», «люди»]):
                     Continue
